@@ -18,7 +18,7 @@ exports.getArticleById = (req,res,next) =>{
 }
 
 exports.getUsers = (req, res, next) =>{
-    fetchAllUsers().then((topics) =>{
-        res.status(200).send({topics})
+    fetchAllUsers().then((users) =>{
+        res.status(200).send({users})
     })
 }
