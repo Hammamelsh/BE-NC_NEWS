@@ -99,6 +99,7 @@ describe.only('GET /api/users', () => {
         .expect(200)
         .then(({body : {users}})=>{
             expect(users).toBeInstanceOf(Array)
+            expect(users).toHaveLength(4)
             users.forEach(user => {
                 expect(user).toEqual(
                 expect.objectContaining({
@@ -112,15 +113,7 @@ describe.only('GET /api/users', () => {
 
         
     });
-    test('status :404 , get api/notusers, not found ', () => {
-        return request(app)
-        .get("/api/notusers")
-        .expect(404)
-        .then(({body})=> {
-            
-            expect(body.msg).toBe("not found")
-        })
-    });
+ 
 });
 
     
