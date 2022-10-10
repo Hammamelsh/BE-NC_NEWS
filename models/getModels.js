@@ -7,7 +7,6 @@ exports.fetchAllTopics = () => {
     })
 }
 exports.fetchArticleById = (id) =>{
-    console.log(typeof id)
 
     return db.query(`SELECT * FROM articles WHERE article_id = $1;`, [id]).then((theResult)=>{
     if(theResult.rows.length !== 0){

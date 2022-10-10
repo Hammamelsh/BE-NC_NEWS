@@ -53,7 +53,7 @@ describe('Backend testing', () => {
     
     describe('GET api/articles/:article_id', () => {
     test.only('status 200: returns article by id', () => {
-        const id = parseInt(1);
+        const id = 1;
     return request(app)
       .get(`/api/articles/${id}`)
       .expect(200)
