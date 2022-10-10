@@ -52,8 +52,8 @@ describe('Backend testing', () => {
     });
     
     describe('GET api/articles/:article_id', () => {
-    test.only('status 200: returns article by id', () => {
-        const id = 1;
+    test('status 200: returns article by id', () => {
+        const id =1;
     return request(app)
       .get(`/api/articles/${id}`)
       .expect(200)
@@ -72,7 +72,7 @@ describe('Backend testing', () => {
       });
         
     });
-    test.only('status: 400, invalid Id not a number', () => {
+    test('status: 400, invalid Id not a number', () => {
         const id = "random"
         return request(app)
         .get(`/api/articles/${id}`)
@@ -82,7 +82,7 @@ describe('Backend testing', () => {
         })
         
     });
-    test.only('status:404, correct data type but id does not exist ', () => {
+    test('status:404, correct data type but id does not exist ', () => {
         const id = 287;
         return request(app)
         .get(`/api/articles/${id}`)
@@ -92,7 +92,29 @@ describe('Backend testing', () => {
         })
     });
 });
+describe.only('GET /api/users', () => {
+    test('status:200 - returns all users within data', () => {
+        return request(app)
+        .get('/api/users')
+        .expect(200)
+        .then(({body : {users}})=>{
+            expect(users).toBeInstanceOf(Array)
+            expect(users).toHaveLength(4)
+            users.forEach(user => {
+                expect(user).toEqual(
+                expect.objectContaining({
+                    username: expect.any(String),
+                    name: expect.any(String),
+                    avatar_url: expect.any(String),
+                        })
+                    )   
+                });
+        })
 
+        
+    });
+ 
+});
 
     
 });
