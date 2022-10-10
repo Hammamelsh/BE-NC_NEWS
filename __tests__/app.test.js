@@ -51,3 +51,25 @@ describe('Backend testing', () => {
         });
     });
 });
+describe('GET api/articles/:article_id', () => {
+    test('status 200: returns article by id', () => {
+        const id = 1;
+    return request(app)
+      .get(`/api/articles/${id}`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toEqual({ 
+        article_id: 1,
+        title: "Living in the shadow of a great man",
+        topic: "mitch",
+        author: "butter_bridge",
+        body: "I find this existence challenging",
+        created_at: 1594329060000,
+        votes: 100,
+         
+        });
+      });
+        
+    });
+    
+});

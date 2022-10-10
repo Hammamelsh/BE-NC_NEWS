@@ -8,7 +8,8 @@ exports.getTopics = (req,res,next) =>{
     })
 }
 exports.getArticleById = (req,res,next) =>{
-    fetchArticleById().then((article) =>{
-        res.status(200).send({article})
+    const id = request.params.article_id
+    fetchArticleById(id).then((article) =>{
+        res.status(200).send({articles})
     })
 }
