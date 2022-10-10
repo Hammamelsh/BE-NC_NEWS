@@ -7,3 +7,8 @@ exports.getTopics = (req,res,next) =>{
         res.status(200).send({topics})
     })
 }
+exports.getArticleById = (req,res,next) =>{
+    fetchArticleById().then((article) =>{
+        res.status(200).send({article})
+    })
+}
