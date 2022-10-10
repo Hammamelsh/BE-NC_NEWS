@@ -40,13 +40,13 @@ describe('Backend testing', () => {
 
             
         });
-        test('status :400 , get api/topixxx, bad request  ', () => {
+        test('status :404 , get api/topixxx, not found ', () => {
             return request(app)
             .get("/api/topixxx")
-            .expect(400)
+            .expect(404)
             .then(({body})=> {
-                console.log(body)
-                expect(body.msg).toBe("bad request")
+                
+                expect(body.msg).toBe("not found")
             })
         });
     });
