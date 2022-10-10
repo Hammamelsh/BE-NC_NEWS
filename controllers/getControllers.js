@@ -1,5 +1,5 @@
 const {
-    fetchAllTopics,
+    fetchAllTopics, fetchArticleById
 } = require('../models/getModels')
 
 exports.getTopics = (req,res,next) =>{
@@ -8,8 +8,10 @@ exports.getTopics = (req,res,next) =>{
     })
 }
 exports.getArticleById = (req,res,next) =>{
-    const id = request.params.article_id
+    const id = req.params.article_id
+    console.log(id)
+    console.log(id)
     fetchArticleById(id).then((article) =>{
-        res.status(200).send({articles})
+        res.status(200).send({article})
     })
 }

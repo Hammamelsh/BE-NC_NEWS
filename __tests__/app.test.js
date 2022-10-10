@@ -50,8 +50,8 @@ describe('Backend testing', () => {
             })
         });
     });
-});
-describe('GET api/articles/:article_id', () => {
+    
+    describe.only('GET api/articles/:article_id', () => {
     test('status 200: returns article by id', () => {
         const id = 1;
     return request(app)
@@ -64,12 +64,18 @@ describe('GET api/articles/:article_id', () => {
         topic: "mitch",
         author: "butter_bridge",
         body: "I find this existence challenging",
-        created_at: 1594329060000,
+        created_at: "2020-07-09T20:11:00.000Z",
         votes: 100,
          
         });
+
       });
         
     });
+    test('should ', () => {
+        
+    });
+});
+
     
 });
