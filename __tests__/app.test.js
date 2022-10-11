@@ -235,3 +235,26 @@ describe('GET api/articles', () => {
     });
 });
     
+describe('GET api/articles/:article_id/comments', () => {
+    test('status:200, returns all the comments for a particular id', () => {
+        const id = 1;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(200)
+        .then(({body})=>{
+            expect(body.comments).toBeInstanceOf(Array);
+            expect(body.comments).toHaveLength(11)
+            let comments = body.comments
+           comments.forEach((comment)=>{
+                expect(comment).toEqual(expect.objectContaining({
+                    comment_id: expect.any(Number),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                }))
+            })
+        })
+
+    });
+});
