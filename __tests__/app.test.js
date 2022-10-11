@@ -57,6 +57,28 @@ describe('Backend testing', () => {
     return request(app)
       .get(`/api/articles/${id}`)
       .expect(200)
+      .then(({ body : {article} }) => {
+        expect(article).toEqual(
+            expect.objectContaining({
+                article_id: expect.any(Number),
+                title: expect.any(String),
+                topic: expect.any(String),
+                author:  expect.any(String),
+                body: expect.any(String),
+                created_at: expect.any(String),
+                votes: expect.any(Number)
+                    })
+                )
+        });
+
+      });
+        
+    });
+    test('status 200: return comment_count', () => {
+        const id =1;
+    return request(app)
+      .get(`/api/articles/${id}`)
+      .expect(200)
       .then(({ body }) => {
         expect(body.article).toEqual({ 
         article_id: 1,
@@ -64,10 +86,12 @@ describe('Backend testing', () => {
         topic: "mitch",
         author: "butter_bridge",
         body: "I find this existence challenging",
+        comment_count: 11,
         created_at: "2020-07-09T20:11:00.000Z",
         votes: 100,
          
         });
+        expect(body.article.comment_count).toBe(11)
 
       });
         
@@ -187,4 +211,3 @@ describe('PATCH /api/articles/:article_id', () => {
 });
 
     
-});
