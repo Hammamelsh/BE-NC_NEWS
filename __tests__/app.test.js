@@ -210,4 +210,29 @@ describe('PATCH /api/articles/:article_id', () => {
    
 });
 
+describe('GET api/articles', () => {
+    test('status:200, returns all the articles', () => {
+        return request(app)
+        .get(`/api/articles`)
+        .expect(200)
+        .then(({body})=>{
+            expect(body.articles).toBeInstanceOf(Array);
+            expect(body.articles).toHaveLength(12)
+            let articles = body.articles
+            console.log(articles)
+            articles.forEach((article)=>{
+                expect(article).toEqual(expect.objectContaining({
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    comment_count: expect.any(Number),
+                }))
+            })
+        })
+
+    });
+});
     
