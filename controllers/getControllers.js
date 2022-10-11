@@ -1,5 +1,5 @@
 const {
-    fetchAllTopics, fetchArticleById, fetchAllUsers
+    fetchAllTopics, fetchArticleById, fetchAllUsers, fetchAllArticles,
 } = require('../models/getModels')
 
 exports.getTopics = (req,res,next) =>{
@@ -20,5 +20,11 @@ exports.getArticleById = (req,res,next) =>{
 exports.getUsers = (req, res, next) =>{
     fetchAllUsers().then((users) =>{
         res.status(200).send({users})
+    })
+}
+
+exports.getArticles = (req,res,next) =>{
+    fetchAllArticles().then((articles) =>{
+        res.status(200).send({articles})
     })
 }
