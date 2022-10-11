@@ -33,3 +33,9 @@ exports.fetchAllUsers = () =>{
     })
 }
 
+exports.fetchAllArticles = () =>{
+    return db.query(`SELECT * FROM articles`).then(({rows})=>{
+
+        return rows
+    })
+}
