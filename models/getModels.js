@@ -2,13 +2,18 @@ const db = require("../db/connection");
 
 exports.fetchAllTopics = () => {
     return db.query(`SELECT * FROM topics;`).then(({rows})=>{
-        
+
         return rows
     })
 }
 exports.fetchArticleById = (id) =>{
 
-    return db.query(`SELECT * FROM articles WHERE article_id = $1;`, [id]).then((theResult)=>{
+    return db.query(`SELECT articles.*, COUNT(comments.article_id) ::INT as comment_count 
+    FROM articles
+    LEFT JOIN comments 
+    ON comments.article_id = articles.article_id 
+    WHERE articles.article_id = $1
+    GROUP BY articles.article_id;`, [id]).then((theResult)=>{
     if(theResult.rows.length !== 0){
     return theResult.rows[0]}
     else{
