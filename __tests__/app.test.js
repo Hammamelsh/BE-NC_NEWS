@@ -51,7 +51,7 @@ describe('Backend testing', () => {
         });
     });
     
-    describe.only('GET api/articles/:article_id', () => {
+    describe('GET api/articles/:article_id', () => {
     test('status 200: returns article by id', () => {
         const id =1;
     return request(app)
@@ -115,23 +115,43 @@ describe('GET /api/users', () => {
     });
  
 });
-describe('PATCH /api/articles/:article_id', () => {
+describe.only('PATCH /api/articles/:article_id', () => {
       test('status 200, updates article by id and accepts a newVote value ', () => {
         const id =1;
-        const voteupdate = {
-           votes: -3
-          };
+       const voteupdate =  { inc_votes: -3 }
+           
 
         return request(app)
         .patch(`/api/articles/${id}`)
         .send(voteupdate)
         .expect(200)
         .then(({body})=>{
-            console.log(body)
+            expect(body.article).toEqual({
+                article_id: 1,
+                title: 'Living in the shadow of a great man',
+                topic: 'mitch',
+                author: 'butter_bridge',
+                body: 'I find this existence challenging',
+                created_at: '2020-07-09T20:11:00.000Z',
+                votes: 97
+            })
+            expect(body.article.votes).toBe(97)
         })
 
       });
-    
+      test.only('status: 400, bad request does not contain valid data type ', () => {
+        const id = 1;
+        const voteupdate =  { inc_votes: "hello" }
+        return request(app)
+        .patch(`/api/articles/${id}`)
+        .send(voteupdate)
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("invalid vote update")
+        })
+        
+    })
+   
 });
 
     
