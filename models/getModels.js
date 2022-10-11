@@ -45,3 +45,7 @@ exports.fetchAllArticles = () =>{
         return rows
     })
 }
+
+exports. selectCommentsById = () =>{
+    return db.query()
+}
