@@ -58,7 +58,7 @@ describe('Backend testing', () => {
       .get(`/api/articles/${id}`)
       .expect(200)
       .then(({ body : {article} }) => {
-        // expect(article).toEqual({ 
+        expect(article).toEqual(
             expect.objectContaining({
                 article_id: expect.any(Number),
                 title: expect.any(String),
@@ -68,7 +68,7 @@ describe('Backend testing', () => {
                 created_at: expect.any(String),
                 votes: expect.any(Number)
                     })
-         
+                )
         });
 
       });
