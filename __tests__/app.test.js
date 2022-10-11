@@ -51,7 +51,7 @@ describe('Backend testing', () => {
         });
     });
     
-    describe('GET api/articles/:article_id', () => {
+    describe.only('GET api/articles/:article_id', () => {
     test('status 200: returns article by id', () => {
         const id =1;
     return request(app)
@@ -92,7 +92,7 @@ describe('Backend testing', () => {
         })
     });
 });
-describe.only('GET /api/users', () => {
+describe('GET /api/users', () => {
     test('status:200 - returns all users within data', () => {
         return request(app)
         .get('/api/users')
@@ -114,6 +114,24 @@ describe.only('GET /api/users', () => {
         
     });
  
+});
+describe('PATCH /api/articles/:article_id', () => {
+      test('status 200, updates article by id and accepts a newVote value ', () => {
+        const id =1;
+        const voteupdate = {
+           votes: -3
+          };
+
+        return request(app)
+        .patch(`/api/articles/${id}`)
+        .send(voteupdate)
+        .expect(200)
+        .then(({body})=>{
+            console.log(body)
+        })
+
+      });
+    
 });
 
     
