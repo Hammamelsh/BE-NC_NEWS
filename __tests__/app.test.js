@@ -219,7 +219,6 @@ describe('GET api/articles', () => {
             expect(body.articles).toBeInstanceOf(Array);
             expect(body.articles).toHaveLength(12)
             let articles = body.articles
-            console.log(articles)
             articles.forEach((article)=>{
                 expect(article).toEqual(expect.objectContaining({
                     author: expect.any(String),
