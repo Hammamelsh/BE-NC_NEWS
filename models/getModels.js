@@ -53,17 +53,15 @@ exports. selectCommentsById = (id) =>{
     WHERE article_id = $1
     ORDER BY created_at DESC ;
     `, [id]).then(({rows})=>{
-        console.log(rows, "<<<model")
+       
     
             return rows
             
-
-            
-       
-
     
 })
 }
+
+
 
     
     

@@ -290,6 +290,8 @@ describe('GET api/articles/:article_id/comments', () => {
     });
 });
 
-describe('Name of the group', () => {
-    
+describe('POST /api/articles/:article_id/comments', () => {
+    test('should ', () => {
+        
+    });
 });

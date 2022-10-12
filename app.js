@@ -15,6 +15,8 @@ app.get("/api/articles/:article_id/comments", getCommentsById)
 //app.patch apis
 app.patch("/api/articles/:article_id", patchById)
 
+//app.post apis
+app.post("")
 
 //error Handling
 app.use("*", (req,res)=>{
