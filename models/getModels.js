@@ -33,13 +33,14 @@ exports.fetchAllUsers = () =>{
     })
 }
 
-exports.fetchAllArticles = () =>{
+exports.fetchAllArticles = (topic) =>{
     return db.query(`SELECT articles.*,
     COUNT(comments.article_id) ::INT as comment_count 
-    FROM articles
+    FROM articles 
     LEFT JOIN comments 
-    ON comments.article_id = articles.article_id 
-    GROUP BY articles.article_id;
+    ON comments.article_id = articles.article_id
+    WHERE articles.topic = 'mitch'
+    GROUP BY articles.article_id;;
     `).then(({rows})=>{
 
         return rows
