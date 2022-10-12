@@ -257,7 +257,23 @@ describe('GET api/articles/:article_id/comments', () => {
         })
 
     });
-    test('should ', () => {
+    test('status:404, correct data type but id does not exist to update ', () => {
+        const id = 287;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toBe("This id has no comments")
+        })
+    });
+    test('status: 400, invalid Id not a number cant patch wrong data type', () => {
+        const id = "random"
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("ID/vote is invalid")
+        })
         
     });
 });
