@@ -24,7 +24,9 @@ exports.getUsers = (req, res, next) =>{
 }
 
 exports.getArticles = (req,res,next) =>{
-    fetchAllArticles().then((articles) =>{
+    const {topic} = req.query
+    console.log(topic)
+    fetchAllArticles(topic).then((articles) =>{
         res.status(200).send({articles})
     })
 }

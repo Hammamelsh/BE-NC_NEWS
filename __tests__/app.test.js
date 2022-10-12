@@ -217,7 +217,7 @@ describe('GET api/articles', () => {
         .expect(200)
         .then(({body})=>{
             expect(body.articles).toBeInstanceOf(Array);
-            expect(body.articles).toHaveLength(12)
+            expect(body.articles).toHaveLength(11)
             let articles = body.articles
             articles.forEach((article)=>{
                 expect(article).toEqual(expect.objectContaining({
@@ -230,6 +230,35 @@ describe('GET api/articles', () => {
                     comment_count: expect.any(Number),
                 }))
             })
+        })
+
+    });
+    test('status:200, returns all the articles for certain topic', () => {
+        return request(app)
+        .get(`/api/articles?topic=mitch`)
+        .expect(200)
+        .then(({body})=>{
+            console.log(body.articles)
+            const body1 = body.articles;
+            // expect(body1).toBeSortedBy('topic');
+            
+            body1.forEach(article => {
+
+                expect(article.topic).toBe("mitch")})
+            // expect(body.articles).toBeInstanceOf(Array);
+            // expect(body.articles).toHaveLength(12)
+            // let articles = body.articles
+            // articles.forEach((article)=>{
+            //     expect(article).toEqual(expect.objectContaining({
+            //         author: expect.any(String),
+            //         title: expect.any(String),
+            //         article_id: expect.any(Number),
+            //         topic: expect.any(String),
+            //         created_at: expect.any(String),
+            //         votes: expect.any(Number),
+            //         comment_count: expect.any(Number),
+            //     }))
+            // })
         })
 
     });
