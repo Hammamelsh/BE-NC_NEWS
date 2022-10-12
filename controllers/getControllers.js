@@ -25,8 +25,11 @@ exports.getUsers = (req, res, next) =>{
 
 exports.getArticles = (req,res,next) =>{
     const {topic} = req.query
-    console.log(topic)
+    //console.log(topic)
     fetchAllArticles(topic).then((articles) =>{
         res.status(200).send({articles})
+    }).catch((err)=>{
+        next(err)
     })
+   
 }

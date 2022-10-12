@@ -217,7 +217,7 @@ describe('GET api/articles', () => {
         .expect(200)
         .then(({body})=>{
             expect(body.articles).toBeInstanceOf(Array);
-            expect(body.articles).toHaveLength(11)
+            expect(body.articles).toHaveLength(12)
             let articles = body.articles
             articles.forEach((article)=>{
                 expect(article).toEqual(expect.objectContaining({
@@ -245,22 +245,20 @@ describe('GET api/articles', () => {
             body1.forEach(article => {
 
                 expect(article.topic).toBe("mitch")})
-            // expect(body.articles).toBeInstanceOf(Array);
-            // expect(body.articles).toHaveLength(12)
-            // let articles = body.articles
-            // articles.forEach((article)=>{
-            //     expect(article).toEqual(expect.objectContaining({
-            //         author: expect.any(String),
-            //         title: expect.any(String),
-            //         article_id: expect.any(Number),
-            //         topic: expect.any(String),
-            //         created_at: expect.any(String),
-            //         votes: expect.any(Number),
-            //         comment_count: expect.any(Number),
-            //     }))
-            // })
+             expect(body.articles).toBeInstanceOf(Array);
+            expect(body.articles).toHaveLength(11)
+            
         })
 
     });
+    test('status: 404, not found in database', ()=>{
+        return request(app)
+        .get(`/api/articles?topic=hello`)
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toEqual("data not found")
+        })
+        
+    })
 });
     
