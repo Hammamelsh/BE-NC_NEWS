@@ -1,6 +1,7 @@
 const express = require('express');
 const {getTopics, getArticleById, getUsers, getArticles, getCommentsById} = require("./controllers/getControllers")
 const{patchById} = require("./controllers/patchControllers")
+const{postComments} = require("./controllers/postControllers")
 
 const app = express();
 app.use(express.json());
@@ -16,7 +17,7 @@ app.get("/api/articles/:article_id/comments", getCommentsById)
 app.patch("/api/articles/:article_id", patchById)
 
 //app.post apis
-app.post("")
+app.post("/api/articles/:article_id/comments", postComments)
 
 //error Handling
 app.use("*", (req,res)=>{
