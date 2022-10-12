@@ -238,7 +238,6 @@ describe('GET api/articles', () => {
         .get(`/api/articles?topic=mitch`)
         .expect(200)
         .then(({body})=>{
-            console.log(body.articles)
             const body1 = body.articles;
             // expect(body1).toBeSortedBy('topic');
             

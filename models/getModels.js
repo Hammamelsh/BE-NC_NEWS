@@ -41,7 +41,6 @@ exports.fetchAllArticles = (topic) =>{
     LEFT JOIN comments 
     ON comments.article_id = articles.article_id`
 
-
     if(topic){
         firstQuery += ` WHERE articles.topic = '${topic}'`
     }
@@ -54,15 +53,4 @@ exports.fetchAllArticles = (topic) =>{
         }
         return rows
     })
-    // return db.query(`SELECT articles.*,
-    // COUNT(comments.article_id) ::INT as comment_count 
-    // FROM articles 
-    // LEFT JOIN comments 
-    // ON comments.article_id = articles.article_id
-    // WHERE articles.topic = 'mitch'
-    // GROUP BY articles.article_id;;
-    // `).then(({rows})=>{
-
-    //     return rows
-    // })
 }
