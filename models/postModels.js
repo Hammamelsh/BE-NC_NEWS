@@ -2,9 +2,12 @@ const db = require("../db/connection");
 const comments = require("../db/data/test-data/comments");
 
 
-exports.addComment = (comment, id) =>{
-    const {username, body} = comment
-     return db.query(`INSERT INTO comments (username, body, article_id) VALUES ($1,$2) RETURNING *`, [username, body, id]).then(({rows})=>{
+exports.addComment = (id,author,body) =>{
+    
+        console.log(author, body, "<<<model")
+        console.log(id)
+    
+     return db.query(`INSERT INTO comments ( article_id, author,body) VALUES ($1, $2,$3) RETURNING *;`, [id, author, body]).then(({rows})=>{
         console.log(rows)
         return rows[0] 
      })

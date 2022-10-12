@@ -290,8 +290,23 @@ describe('GET api/articles/:article_id/comments', () => {
     });
 });
 
-describe('POST /api/articles/:article_id/comments', () => {
-    test('should ', () => {
+// describe('POST /api/articles/:article_id/comments', () => {
+//     test('status: 200, returns with new inserted comment', () => {
+//         const id =2;
+//         const newComment = {
+//             author: "newwop",
+//             body: "This article absolutely smacks dude",
+//         }
+//         return request(app)
+//         .post(`/api/articles/${id}/comments`)
+//         .expect(201)
+//         .send(newComment)
+//         .then(({body})=>{
+//             console.log(body.comment)
+//             // expect(body.comment).toEqual({ ...newComment
+
+//             // })
+//         })
         
-    });
-});
+//     });
+// });
