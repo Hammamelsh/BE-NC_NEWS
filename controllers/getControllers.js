@@ -31,9 +31,14 @@ exports.getArticles = (req,res,next) =>{
 
 exports.getCommentsById = (req, res, next) =>{
     const id = req.params.article_id
+    fetchArticleById(id)
+    .then(()=>{
     selectCommentsById(id).then((comments)=>{
         res.status(200).send({comments})
-    }).catch((err)=>{
+    }) 
+    })
+    .catch((err)=>{
         next(err)
     })
+    
 }

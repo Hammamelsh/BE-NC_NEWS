@@ -263,7 +263,7 @@ describe('GET api/articles/:article_id/comments', () => {
         .get(`/api/articles/${id}/comments`)
         .expect(404)
         .then(({body})=>{
-            expect(body.msg).toBe("This id has no comments")
+            expect(body.msg).toBe("This id is not found")
         })
     });
     test('status: 400, invalid Id not a number cant patch wrong data type', () => {
@@ -276,4 +276,20 @@ describe('GET api/articles/:article_id/comments', () => {
         })
         
     });
+    test('status:200, returns empty array when article does not have any comments', () => {
+        const id = 2;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(200)
+        .then(({body})=>{
+            expect(body.comments).toBeInstanceOf(Array);
+            //expect(body.comments).toHaveLength(11)
+            expect(body.comments).toEqual([])
+        })
+
+    });
+});
+
+describe('Name of the group', () => {
+    
 });
