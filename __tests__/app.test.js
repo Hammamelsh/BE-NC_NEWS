@@ -436,3 +436,32 @@ describe('POST /api/articles/:article_id/comments', () => {
 
     });
     });
+
+    describe('DELETE /api/comments/:comment_id', () => {
+        test('status:204 , the comment has been deleted', () => {
+            const id = 4;
+            return request(app)
+            .delete(`/api/comments/${id}`)
+            .expect(204)
+            
+    });
+    test('status:404, correct data type but id does not exist to delete ', () => {
+        const id = 287;
+        return request(app)
+        .delete(`/api/comments/${id}`)
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toBe("comment id not found")
+        })
+    })
+    test('status: 400, invalid Id not a number cant delete wrong data type', () => {
+        const id = "random"
+        return request(app)
+        .delete(`/api/comments/${id}`)
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("ID/vote is invalid")
+        })
+        
+    });
+    })
