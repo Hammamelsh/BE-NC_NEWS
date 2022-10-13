@@ -290,8 +290,8 @@ describe('GET api/articles/:article_id/comments', () => {
     });
 });
 
-describe('POST /api/articles/:article_id/comments', () => {
-    test('status: 200, returns with new inserted comment', () => {
+describe.only('POST /api/articles/:article_id/comments', () => {
+    test('status: 201, returns with new inserted comment', () => {
         const id =2;
         const newComment = {
             author: "rogersop",
@@ -302,14 +302,13 @@ describe('POST /api/articles/:article_id/comments', () => {
         .expect(201)
         .send(newComment)
         .then(({body})=>{
-            // console.log(body)
-            // expect(body.comments).toEqual({ 
-            //     comment_id: 19, 
-            //     ...newComment,
-            //     article_id: 2,
-            //     votes: 0,
-            //     created_at: "2022-10-13T10:18:00.649Z"
-            // })
+            expect(body.comments).toEqual({ 
+                comment_id: 19, 
+                ...newComment,
+                article_id: 2,
+                votes: 0,
+                created_at: expect.any(String),
+            })
             expect(body.comments).toEqual(
                 expect.objectContaining({
                   author: "rogersop",
@@ -318,7 +317,16 @@ describe('POST /api/articles/:article_id/comments', () => {
               );
         }) 
     });
-  
+    test('status:404, responds with foreign key violeted', () => {
+        const id = 2;
+      return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .send({ author: "newwop", body: "nwhatever" })
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe("Id/foreign key not found");
+        });
+    });
     test('status:404, correct data type but id does not exist to update ', () => {
         const id = 287;
         return request(app)
@@ -326,7 +334,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         .send({author:"rogersop", body: "This article absolutely smacks dude",})
         .expect(404)
         .then(({body})=>{
-            expect(body.msg).toBe("This id is not found")
+            expect(body.msg).toBe("Id/foreign key not found")
         })
     })
     test('status: 400, invalid Id not a number cant patch wrong data type', () => {
@@ -339,5 +347,39 @@ describe('POST /api/articles/:article_id/comments', () => {
             expect(body.msg).toBe("ID/vote is invalid")
         })
         
+    });
+    test('status: 400, bad request not correctly formatted', () => {
+        const id = 2;
+        return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .send({body: "hello yo"})
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("bad request not correct format")
+        })
+        
+    });
+    test('status :201, ignores unnecessary properties', () => {
+        const id =2
+        newComment = {
+            author: "rogersop",
+            body: "Testing",
+            whatever: "something should be ignored"
+            }
+            return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .expect(201)
+        .send(newComment)
+        .then(({body})=>{
+ expect(body.comments).toEqual({ 
+                comment_id: 19, 
+                author:"rogersop" ,
+                body: "Testing",
+                article_id: 2,
+                votes: 0,
+                created_at: expect.any(String),
+            })
+        })
+
     });
     });
