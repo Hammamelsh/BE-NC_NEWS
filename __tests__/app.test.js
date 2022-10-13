@@ -316,7 +316,7 @@ describe('GET api/articles/:article_id/comments', () => {
     });
 });
 
-describe.only('POST /api/articles/:article_id/comments', () => {
+describe('POST /api/articles/:article_id/comments', () => {
     test('status: 201, returns with new inserted comment', () => {
         const id =2;
         const newComment = {
