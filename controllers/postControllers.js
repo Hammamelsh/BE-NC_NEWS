@@ -9,7 +9,7 @@ exports.postComments = (req,res,next) =>{
 
     fetchArticleById(id)
     .then(()=>{
-    addComment(id,author,body).
+    addComment(id, author,body).
     then((comments)=>{
         console.log(comments)
         res.status(201).send({comments})

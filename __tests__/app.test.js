@@ -303,9 +303,9 @@ describe('GET api/articles/:article_id/comments', () => {
 //         .send(newComment)
 //         .then(({body})=>{
 //             console.log(body.comment)
-//             // expect(body.comment).toEqual({ ...newComment
+            // expect(body.comment).toEqual({ ...newComment
 
-//             // })
+            // })
 //         })
         
 //     });
