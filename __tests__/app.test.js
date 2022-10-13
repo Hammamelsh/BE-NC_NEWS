@@ -233,13 +233,13 @@ describe('GET api/articles', () => {
         })
 
     });
-    test('status:200, returns all the articles for certain topic', () => {
+    test('status:200, returns all the articles for certain topic and checks if sort_by is done by default for the date and ordered in default DESC order', () => {
         return request(app)
         .get(`/api/articles?topic=mitch`)
         .expect(200)
         .then(({body})=>{
             const body1 = body.articles;
-            // expect(body1).toBeSortedBy('topic');
+            expect(body1).toBeSortedBy("created_at", { descending: true });
             
             body1.forEach(article => {
 
@@ -250,6 +250,14 @@ describe('GET api/articles', () => {
         })
 
     });
+    test('status 200 , can sort_by a different column and in ASC order', () => {
+        return request(app)
+        .get("/api/articles?sort_by=votes&order=asc")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).toBeSortedBy("votes", { ascending: true });
+        });
+    });
     test('status: 404, not found in database', ()=>{
         return request(app)
         .get(`/api/articles?topic=hello`)
@@ -259,6 +267,25 @@ describe('GET api/articles', () => {
         })
         
     })
+    test('status:400 , returns with a bad request due to order not being correct', () => {
+        return request(app)
+        .get(`/api/articles?order=hello`)
+        .expect(400)
+        .then(({body})=>{
+           expect(body.msg).toBe("invalid input")
+        })
+        
+    });
+    test('status:400 , returns with a bad request due to sort not being correct', () => {
+        return request(app)
+        .get(`/api/articles?sort_by=hello`)
+        .expect(400)
+        .then(({body})=>{
+           expect(body.msg).toBe("invalid sort_by input")
+        })
+        
+    });
+    
 });
     
 describe('GET api/articles/:article_id/comments', () => {

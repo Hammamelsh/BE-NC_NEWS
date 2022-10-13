@@ -34,7 +34,24 @@ exports.fetchAllUsers = () =>{
     })
 }
 
-exports.fetchAllArticles = (topic) =>{
+exports.fetchAllArticles = (topic, sort_by = "created_at", order = 'DESC') =>{
+
+    order = order.toUpperCase()
+    const acceptableOrder = ["ASC", "DESC"]
+    if(!acceptableOrder.includes(order)){
+        return Promise.reject({status: 400, msg: "invalid input"})
+    }
+    const acceptablesSortBy =[
+        "article_id",
+        "comment_count",
+        "title",
+        "author",
+        "created_at",
+        "votes",
+      ];
+      if(!acceptablesSortBy.includes(sort_by)){
+        return Promise.reject({status: 400, msg: "invalid sort_by input"})
+    }
 
     let firstQuery = `SELECT articles.*,
     COUNT(comments.article_id) ::INT as comment_count 
@@ -45,7 +62,8 @@ exports.fetchAllArticles = (topic) =>{
     if(topic){
         firstQuery += ` WHERE articles.topic = '${topic}'`
     }
-        firstQuery += ` GROUP BY articles.article_id;`
+    firstQuery += ` GROUP BY articles.article_id
+    ORDER BY ${sort_by} ${order}`
 
     return db.query(firstQuery)
     .then(({rows}) => {
