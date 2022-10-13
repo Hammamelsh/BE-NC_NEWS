@@ -290,23 +290,74 @@ describe('GET api/articles/:article_id/comments', () => {
     });
 });
 
-// describe('POST /api/articles/:article_id/comments', () => {
-//     test('status: 200, returns with new inserted comment', () => {
-//         const id =2;
-//         const newComment = {
-//             author: "newwop",
-//             body: "This article absolutely smacks dude",
-//         }
-//         return request(app)
-//         .post(`/api/articles/${id}/comments`)
-//         .expect(201)
-//         .send(newComment)
-//         .then(({body})=>{
-//             console.log(body.comment)
-            // expect(body.comment).toEqual({ ...newComment
-
-            // })
-//         })
+describe('POST /api/articles/:article_id/comments', () => {
+    test('status: 200, returns with new inserted comment', () => {
+        const id =2;
+        const newComment = {
+            author: "rogersop",
+            body: "This article absolutely smacks dude",
+        }
+        return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .expect(201)
+        .send(newComment)
+        .then(({body})=>{
+            console.log(body)
+            expect(body.comments).toEqual({ 
+                comment_id: 19, 
+                ...newComment,
+                article_id: 2,
+                votes: 0,
+                created_at: "2022-10-13T10:18:00.649Z"
+            })
+            expect(body.comments).toEqual(
+                expect.objectContaining({
+                  author: "rogersop",
+                  body: "This article absolutely smacks dude",
+                })
+              );
+        }) 
+    });
+    // test('status:400, responds with foreign key violeted', () => {
+    //     const id = 2;
+    //   return request(app)
+    //     .post(`/api/articles/${id}/comments`)
+    //     .send({ author: "newwop", body: "nwhatever" })
+    //     .expect(400)
+    //     .then(({ body: { msg } }) => {
+    //       expect(msg).toBe("invalid key");
+    //     });
+    // });
+    test('status:404, correct data type but id does not exist to update ', () => {
+        const id = 287;
+        return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .send({author:"rogersop", body: "This article absolutely smacks dude",})
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toBe("This id is not found")
+        })
+    })
+    test('status: 400, invalid Id not a number cant patch wrong data type', () => {
+        const id = "random"
+        return request(app)
+        .post(`/api/articles/${id}/comments`)
+        .send({author: "rogersop", body: "This article absolutely smacks dude",})
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("ID/vote is invalid")
+        })
         
-//     });
-// });
+    });
+    // test('status: 400, bad request not correctly formatted', () => {
+    //     const id = 2
+    //     return request(app)
+    //     .post(`/api/articles/${id}/comments`)
+    //     .send({author: "rogersop"})
+    //     .expect(400)
+    //     .then(({body}) =>{
+    //         expect(body.msg).toBe("bad request not correct format")
+    //     })
+        
+    // });
+    });
