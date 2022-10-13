@@ -1,5 +1,5 @@
 const {
-    fetchAllTopics, fetchArticleById, fetchAllUsers, fetchAllArticles, selectCommentsById,
+    fetchAllTopics, fetchArticleById, fetchAllUsers, fetchAllArticles, selectCommentsById, fetchAllApis
 } = require('../models/getModels')
 
 exports.getTopics = (req,res,next) =>{
@@ -46,4 +46,10 @@ exports.getCommentsById = (req, res, next) =>{
         next(err)
     })
     
+}
+
+exports.getApi = (req,res,next) =>{
+    fetchAllApis().then((endpoints)=>{
+        res.status(200).send(endpoints)
+    })
 }
