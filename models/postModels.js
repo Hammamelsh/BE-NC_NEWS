@@ -3,8 +3,6 @@ const comments = require("../db/data/test-data/comments");
 
 
 exports.addComment = (id,author,body) =>{
-
-
    if(!author || !body){
       return Promise.reject({
          status:400,
