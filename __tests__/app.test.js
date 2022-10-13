@@ -438,7 +438,7 @@ describe('POST /api/articles/:article_id/comments', () => {
     });
 
     describe('DELETE /api/comments/:comment_id', () => {
-        test.only('status:204 , the comment has been deleted', () => {
+        test('status:204 , the comment has been deleted', () => {
             const id = 4;
             return request(app)
             .delete(`/api/comments/${id}`)
