@@ -445,7 +445,7 @@ describe('POST /api/articles/:article_id/comments', () => {
             .expect(204)
             
     });
-    test('status:404, correct data type but id does not exist to update ', () => {
+    test('status:404, correct data type but id does not exist to delete ', () => {
         const id = 287;
         return request(app)
         .delete(`/api/comments/${id}`)
@@ -454,7 +454,7 @@ describe('POST /api/articles/:article_id/comments', () => {
             expect(body.msg).toBe("comment id not found")
         })
     })
-    test('status: 400, invalid Id not a number cant patch wrong data type', () => {
+    test('status: 400, invalid Id not a number cant delete wrong data type', () => {
         const id = "random"
         return request(app)
         .delete(`/api/comments/${id}`)
