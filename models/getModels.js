@@ -34,15 +34,24 @@ exports.fetchAllUsers = () =>{
     })
 }
 
-exports.fetchAllArticles = () =>{
-    return db.query(`SELECT articles.*,
-    COUNT(comments.article_id) ::INT as comment_count 
-    FROM articles
-    LEFT JOIN comments 
-    ON comments.article_id = articles.article_id 
-    GROUP BY articles.article_id;
-    `).then(({rows})=>{
+exports.fetchAllArticles = (topic) =>{
 
+    let firstQuery = `SELECT articles.*,
+    COUNT(comments.article_id) ::INT as comment_count 
+    FROM articles 
+    LEFT JOIN comments 
+    ON comments.article_id = articles.article_id`
+
+    if(topic){
+        firstQuery += ` WHERE articles.topic = '${topic}'`
+    }
+        firstQuery += ` GROUP BY articles.article_id;`
+
+    return db.query(firstQuery)
+    .then(({rows}) => {
+        if(rows.length === 0){
+            return Promise.reject({status: 404, msg: 'data not found',})
+        }
         return rows
     })
 }

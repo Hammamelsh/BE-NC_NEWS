@@ -233,6 +233,32 @@ describe('GET api/articles', () => {
         })
 
     });
+    test('status:200, returns all the articles for certain topic', () => {
+        return request(app)
+        .get(`/api/articles?topic=mitch`)
+        .expect(200)
+        .then(({body})=>{
+            const body1 = body.articles;
+            // expect(body1).toBeSortedBy('topic');
+            
+            body1.forEach(article => {
+
+                expect(article.topic).toBe("mitch")})
+             expect(body.articles).toBeInstanceOf(Array);
+            expect(body.articles).toHaveLength(11)
+            
+        })
+
+    });
+    test('status: 404, not found in database', ()=>{
+        return request(app)
+        .get(`/api/articles?topic=hello`)
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toEqual("data not found")
+        })
+        
+    })
 });
     
 describe('GET api/articles/:article_id/comments', () => {
