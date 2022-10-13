@@ -1,4 +1,5 @@
 const db = require("../db/connection");
+const comments = require("../db/data/test-data/comments");
 
 exports.fetchAllTopics = () => {
     return db.query(`SELECT * FROM topics;`).then(({rows})=>{
@@ -54,3 +55,24 @@ exports.fetchAllArticles = (topic) =>{
         return rows
     })
 }
+
+exports. selectCommentsById = (id) =>{
+    
+    return db.query(`SELECT * FROM comments
+    WHERE article_id = $1
+    ORDER BY created_at DESC ;
+    `, [id]).then(({rows})=>{
+        console.log(rows, "<<<model")
+    
+            return rows
+            
+
+            
+       
+
+    
+})
+}
+
+    
+    

@@ -261,3 +261,61 @@ describe('GET api/articles', () => {
     })
 });
     
+describe('GET api/articles/:article_id/comments', () => {
+    test('status:200, returns all the comments for a particular id', () => {
+        const id = 1;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(200)
+        .then(({body})=>{
+            expect(body.comments).toBeInstanceOf(Array);
+            expect(body.comments).toHaveLength(11)
+            let comments = body.comments
+           comments.forEach((comment)=>{
+                expect(comment).toEqual(expect.objectContaining({
+                    comment_id: expect.any(Number),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                }))
+            })
+        })
+
+    });
+    test('status:404, correct data type but id does not exist to update ', () => {
+        const id = 287;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(404)
+        .then(({body})=>{
+            expect(body.msg).toBe("This id is not found")
+        })
+    });
+    test('status: 400, invalid Id not a number cant patch wrong data type', () => {
+        const id = "random"
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(400)
+        .then(({body}) =>{
+            expect(body.msg).toBe("ID/vote is invalid")
+        })
+        
+    });
+    test('status:200, returns empty array when article does not have any comments', () => {
+        const id = 2;
+        return request(app)
+        .get(`/api/articles/${id}/comments`)
+        .expect(200)
+        .then(({body})=>{
+            expect(body.comments).toBeInstanceOf(Array);
+            //expect(body.comments).toHaveLength(11)
+            expect(body.comments).toEqual([])
+        })
+
+    });
+});
+
+describe('Name of the group', () => {
+    
+});
