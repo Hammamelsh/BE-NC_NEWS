@@ -1,5 +1,6 @@
 const db = require("../db/connection");
 const comments = require("../db/data/test-data/comments");
+const fs = require('fs/promises')
 
 exports.fetchAllTopics = () => {
     return db.query(`SELECT * FROM topics;`).then(({rows})=>{
@@ -88,6 +89,11 @@ exports. selectCommentsById = (id) =>{
 })
 }
 
+exports.fetchAllApis = ()=>{
+    return fs.readFile("../endpoints.json", "utf-8").then((info)=>{
+        return JSON.parse(info)
+    })
+}
 
 
     
