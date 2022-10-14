@@ -50,6 +50,6 @@ exports.getCommentsById = (req, res, next) =>{
 
 exports.getApi = (req,res,next) =>{
     fetchAllApis().then((endpoints)=>{
-        res.status(200).send(endpoints)
+        res.status(200).send({endpoints})
     })
 }

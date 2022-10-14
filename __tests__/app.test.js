@@ -465,3 +465,10 @@ describe('POST /api/articles/:article_id/comments', () => {
         
     });
     })
+    describe('test api', () => {
+        test('should return apis', () => {
+           return request(app)
+           .get("/api")
+           .expect(200) 
+        });
+    });
