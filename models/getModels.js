@@ -91,7 +91,6 @@ exports. selectCommentsById = (id) =>{
 
 exports.fetchAllApis = ()=>{
     return fs.readFile("./endpoints.json", "utf-8").then((data)=>{
-        console.log(data)
         return JSON.parse(data)
     })
 }
