@@ -3,9 +3,10 @@ const {getTopics, getArticleById, getUsers, getArticles, getCommentsById, getApi
 const{patchById} = require("./controllers/patchControllers")
 const{postComments} = require("./controllers/postControllers")
 const{deleteComment} = require("./controllers/deleteControllers")
+const cors = require('cors');
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 //app.get apis
 app.get("/api/topics", getTopics);
 app.get("/api/articles/:article_id",  getArticleById);
